@@ -2,6 +2,8 @@
 
 $conn = new mysqli('localhost', 'root', '', 'warehouse2');
 
+$conn_server = new mysqli('localhost', 'root', '', 'warehouse2');
+
 if( !$conn ){
 	mysqli_connect_error();
 }

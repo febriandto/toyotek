@@ -5,13 +5,13 @@ $countBarang = 0;
 $dataBarang = [];
 while($barangs = $barang->fetch_array()){
 
-	if( $barangs['last_stock'] < 5 ){
-	
-		$countBarang++;
-		$dataBarang['nama_barang'][] = $barangs['nama_barang'];
-		$dataBarang['last_stock'][] = $barangs['last_stock'];
+	if( $barangs['last_stock'] <= 5 AND ( $barangs['id_barang'] == 1 OR $barangs['id_barang'] == 2 OR $barangs['id_barang'] == 3 OR $barangs['id_barang'] == 4 OR $barangs['id_barang'] == 5 OR $barangs['id_barang'] == 6 OR $barangs['id_barang'] == 7 OR $barangs['id_barang'] == 8 OR $barangs['id_barang'] == 9 ) ){
+
+		$dataBarang[$barangs['id_barang']]['nama_barang'] = $barangs['nama_barang'];
+		$dataBarang[$barangs['id_barang']]['last_stock'] = $barangs['last_stock'];
 	
 	}
+
 
 }
 
@@ -20,16 +20,16 @@ while($barangs = $barang->fetch_array()){
 <div class="container my-5">
 	<div class="row">
 		<div class="col-md-12">
-			<h2 class="text-center">Menu</h2>
+			<h2 class="text-center">Halaman Utama</h2>
 		</div>
 	</div>
 
-	<?php if( $countBarang != 0 ): ?>
+	<?php if( count($dataBarang) != 0 ): ?>
 	<div class="card mt-4 shadow">
 		<div class="card-body">
 			<?php foreach($dataBarang as $key => $data) : ?>
-			<div class="alert alert-danger mb-0">
-				<p class="mb-0"><?= $dataBarang['nama_barang'][2] ?> tinggal <b>5</b> </p>
+			<div class="alert alert-danger my-2">
+				<p class="mb-0"><?= $data['nama_barang'] ?> tinggal <b><?= $data['last_stock'] ?></b> </p>
 			</div>
 			<?php endforeach; ?>
 		</div>
@@ -38,7 +38,17 @@ while($barangs = $barang->fetch_array()){
 
 
 	<div class="row mt-5">
-		<div class="col-md-4 col-6">
+
+		<div class="col-md-4 col-6 mt-md-4 mt-4">
+			<a href="stock_barang.php">
+				<div class="" style="padding:10px;width: 97%;height: 200px;border-radius: 10px;background: #ffffff;    box-shadow: 0px 0px 10px 5px #0000000f;margin: auto;">
+					<img src="images/stock_barang.png?v=1" width="85px" alt="" class="d-block mt-3 mx-auto">
+					<p class="text-center mt-4 fw-bold small">Stock Barang</p>
+				</div>
+			</a>
+		</div>
+
+		<div class="col-md-4 col-6 mt-md-4 mt-4">
 			<a href="out.php">
 				<div class="" style="padding:10px;width: 97%;height: 200px;border-radius: 10px;background: #ffffff;    box-shadow: 0px 0px 10px 5px #0000000f;margin: auto;">
 					<img src="images/box.png?v=1" width="85px" alt="" class="d-block mt-3 mx-auto">
@@ -47,7 +57,7 @@ while($barangs = $barang->fetch_array()){
 			</a>
 		</div>
 
-		<div class="col-md-4 col-6">
+		<div class="col-md-4 col-6 mt-md-4 mt-4">
 			<a href="so.php">
 				<div class="" style="padding:10px;width: 97%;height: 200px;border-radius: 10px;background: #ffffff;    box-shadow: 0px 0px 10px 5px #0000000f;margin: auto;">
 					<img src="images/so.png?v=1" width="85px" alt="" class="d-block mt-3 mx-auto">
@@ -56,7 +66,7 @@ while($barangs = $barang->fetch_array()){
 			</a>
 		</div>
 
-		<div class="col-md-4 col-6 mt-md-0 mt-4">
+		<div class="col-md-4 col-6 mt-md-4 mt-4">
 			<a href="kimia.php" id="kimias">
 				<div class="" style="padding:10px;width: 97%;height: 200px;border-radius: 10px;background: #ffffff;    box-shadow: 0px 0px 10px 5px #0000000f;margin: auto;">
 					<img src="images/tube.png?v=1" width="85px" alt="" class="d-block mt-3 mx-auto">
@@ -70,6 +80,15 @@ while($barangs = $barang->fetch_array()){
 				<div class="" style="padding:10px;width: 97%;height: 200px;border-radius: 10px;background: #ffffff;    box-shadow: 0px 0px 10px 5px #0000000f;margin: auto;">
 					<img src="images/spk.png?v=1" width="85px" alt="" class="d-block mt-3 mx-auto">
 					<p class="text-center mt-4 fw-bold small">Surat Perintah Kerja</p>
+				</div>
+			</a>
+		</div>
+
+		<div class="col-md-4 col-6 mt-md-4 mt-4">
+			<a href="riwayat-catat.php">
+				<div class="" style="padding:10px;width: 97%;height: 200px;border-radius: 10px;background: #ffffff;    box-shadow: 0px 0px 10px 5px #0000000f;margin: auto;">
+					<img src="images/riwayat-catat.png?v=1" width="85px" alt="" class="d-block mt-3 mx-auto">
+					<p class="text-center mt-4 fw-bold small">Riwayat Catat</p>
 				</div>
 			</a>
 		</div>
