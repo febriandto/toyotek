@@ -20,7 +20,7 @@ while($barangs = $barang->fetch_array()){
 <div class="container my-5">
 	<div class="row">
 		<div class="col-md-12">
-			<h2 class="text-center">Halaman Utama</h2>
+			<h2 class="text-center">TOYO apps</h2>
 		</div>
 	</div>
 
@@ -53,6 +53,15 @@ while($barangs = $barang->fetch_array()){
 				<div class="" style="padding:10px;width: 97%;height: 200px;border-radius: 10px;background: #ffffff;    box-shadow: 0px 0px 10px 5px #0000000f;margin: auto;">
 					<img src="images/box.png?v=1" width="85px" alt="" class="d-block mt-3 mx-auto">
 					<p class="text-center mt-4 fw-bold small">Pengeluaran Barang</p>
+				</div>
+			</a>
+		</div>
+
+		<div class="col-md-4 col-6 mt-md-4 mt-4">
+			<a href="barang-masuk.php">
+				<div class="" style="padding:10px;width: 97%;height: 200px;border-radius: 10px;background: #ffffff;    box-shadow: 0px 0px 10px 5px #0000000f;margin: auto;">
+					<img src="images/barang-masuk.png?v=1" width="85px" alt="" class="d-block mt-3 mx-auto">
+					<p class="text-center mt-4 fw-bold small">Barang Masuk</p>
 				</div>
 			</a>
 		</div>
@@ -99,20 +108,20 @@ while($barangs = $barang->fetch_array()){
 
 <script>
 	
-	var kimia = document.getElementById('kimia');
+	// var kimia = document.getElementById('kimia');
 
-	kimia.onclick = function(){
+	// kimia.onclick = function(){
 
-		var con = prompt("Masukan Kata Sandi");
+	// 	var con = prompt("Masukan Kata Sandi");
 
-		if(con == "admin123@"){
-			return true;
-		}else{
-			alert("Kata Sandi Salah!!");
-			return false;
-		}
+	// 	if(con == "admin123@"){
+	// 		return true;
+	// 	}else{
+	// 		alert("Kata Sandi Salah!!");
+	// 		return false;
+	// 	}
 
-	};
+	// };
 
 </script>
 

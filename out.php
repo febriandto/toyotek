@@ -1,13 +1,14 @@
 <?php include "header.php"; 
 
 if (isset($_POST['submit'])) {
-  
+  $qty = $_POST['qty'];
+
   $id_barang = $_POST['id_barang'];
   $qty = $_POST['qty'];
 
   $q = $conn->query("INSERT INTO `m_barang_pengeluaran` (`id_barang`, `qty`, `input_date`) VALUES ($id_barang, $qty, current_timestamp()) ");
 
-  $qq = $conn->query(" UPDATE m_barang SET last_stock = last_stock - 1 WHERE id_barang = $id_barang ");
+  $qq = $conn->query(" UPDATE m_barang SET last_stock = last_stock - $qty WHERE id_barang = $id_barang ");
 
   if($q){
     header("Location: out.php?alert=success");
@@ -111,6 +112,7 @@ if (isset($_POST['submit'])) {
             </div>
           </div>
         </div>
+        
       </div>
 
     </div>

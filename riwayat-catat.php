@@ -12,6 +12,12 @@
 
 ?>
 
+<div class="preloader"><span class="preloader-js">
+  <img src="images/loading.gif" alt="" style="    width: 50%;
+    margin: auto;
+    display: block;
+    margin-top: 10rem;">
+</span></div>
 
 <!-- Modal -->
 <div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -130,5 +136,13 @@
     </div>
 
 </div>
+
+<script>
+      //after window is loaded completely 
+      window.onload = function(){
+          //hide the preloader
+          document.querySelector(".preloader").style.display = "none";
+      }
+  </script>
 
 <?php include "footer.php"; ?>  

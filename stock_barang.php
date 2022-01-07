@@ -61,7 +61,7 @@ $all = $conn->query(" SELECT * FROM m_barang WHERE is_delete = 'N' AND id_catego
 				</div>
 				<div class="card-body">
 
-					<table class="table table-bordered table-hover table-striped w-100">
+					<table class="table table-bordered table-hover table-striped">
 						
 						<thead>
 							<tr>
@@ -71,7 +71,7 @@ $all = $conn->query(" SELECT * FROM m_barang WHERE is_delete = 'N' AND id_catego
 							</tr>
 						</thead>
 
-						<thead>
+						<body>
 							<?php $i = 1; while($row = $all->fetch_array()) : ?>
 								<tr>
 									<td><?= $i++ ?></td>
@@ -79,7 +79,7 @@ $all = $conn->query(" SELECT * FROM m_barang WHERE is_delete = 'N' AND id_catego
 									<td align="right"><?= number_format($row['last_stock']) ?></td>
 								</tr>
 							<?php endwhile; ?>
-						</thead>
+						</body>
 
 					</table>
 
