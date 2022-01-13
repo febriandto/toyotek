@@ -1,6 +1,33 @@
 <?php include "header.php"; 
 
+$barangs = $conn->query("SELECT * FROM `m_barang` WHERE is_delete = 'N' and id_category = 1 ORDER BY `m_barang`.`id_barang` ASC ");
 
+if( isset($_POST['submit']) ){
+
+  $id_barang = $_POST['id_barang'];
+  $qty = $_POST['qty'];
+  $keterangan = $_POST['keterangan'];
+  $tanggal = date('Y-m-d');
+
+  $t_barang_masuk = $conn->query("INSERT INTO `t_barang_masuk` (`id_barang_masuk`, `tanggal`, `keterangan`, `is_lock`, `input_by`, `input_date`) VALUES (NULL, current_timestamp(), '$keterangan', '-', 'TSM Apps', current_timestamp()); ");
+
+  $id = $conn->query("SELECT max(id_barang_masuk) as id FROM `t_barang_masuk`");
+  $id = $id->fetch_array();
+  $id = $id['id'];
+
+  foreach($id_barang as $key => $value){
+
+    $t_barang_masuk_item = $conn->query(" INSERT INTO `t_barang_masuk_item` (`id_barang_masuk`, `id_barang`, `warna`, `size`, `qty`) VALUES ($id, $id_barang[$key], '-', '-', $qty[$key]) ");
+
+    $add = $conn->query("UPDATE m_barang SET last_stock = last_stock + $qty[$key] WHERE id_barang = $id_barang[$key] ");
+
+  }
+
+  if($t_barang_masuk){
+    header("Location: barang-masuk.php?alert=success");
+  }
+
+}
 
 ?>
 
@@ -51,7 +78,7 @@
                     
                     <div class="col-md-6 col-6">
                       <label for=""> Nama Barang </label>
-                      <select name="id_barang" class="form-control" required>
+                      <select name="id_barang[]" id="id_barang" class="form-control" required>
                         <option value="">- Pilih -</option>
                         <?php while ($row = $barang->fetch_array()) {
                               echo '<option value="'.$row["id_barang"].'">'.$row["nama_barang"].'. ('.$row["last_stock"].') </option>';
@@ -65,7 +92,7 @@
                           <label for=""> Qty Barang </label>
                         </div>
                         <div class="col-md-12">
-                          <input type="number" name="qty" class="form-control" placeholder="0" required>
+                          <input type="number" name="qty[]" class="form-control" placeholder="0" required>
                         </div>
                       </div>
                     </div>
@@ -75,7 +102,7 @@
                 </div>
 
                 <div class="col-12 col-md-12 mt-3">
-                  <button type="button" class="btn btn-info btn-sm" onclick="tambah(this)"> + Tambah</button>
+                  <button type="button" class="btn btn-success btn-sm" onclick="tambah(this)"> + Tambah</button>
                 </div>
 
 
@@ -123,41 +150,54 @@
 
     </div>
 
-
-  <div class="row border-bottom p-2" id="source">
+<div id="source" style="display:none;">
+  <div class="row border-bottom p-2">
                     
     <div class="col-md-6 col-6">
       <label for=""> Nama Barang </label>
-      <select name="id_barang" class="form-control" required>
+      <select name="id_barang[]" id="id_barang" class="form-control" required>
         <option value="">- Pilih -</option>
-        <?php while ($row = $barang->fetch_array()) {
+        <?php while ($row = $barangs->fetch_array()) {
               echo '<option value="'.$row["id_barang"].'">'.$row["nama_barang"].'. ('.$row["last_stock"].') </option>';
           } ?>
       </select>
     </div>
 
-    <div class="col-md-6 col-6">
+    <div class="col-md-4 col-4">
       <div class="row">
         <div class="col-md-12">
           <label for=""> Qty Barang </label>
         </div>
         <div class="col-md-12">
-          <input type="number" name="qty" class="form-control" placeholder="0" required>
+          <input type="number" name="qty[]" class="form-control" placeholder="0" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2 col-2 align-self-center">
+      <div class="row">
+        <div class="col-md-12 align-self-center">
+          <button type="button" class="btn btn-danger" onclick="hapus(this);">X</button>
+          <br>
         </div>
       </div>
     </div>
 
   </div>
+</div>
 
 <script>
 
   function tambah(obj){
 
-    var source = document.getElementById("source");
-    var recive = document.getElementById("recive");
+    var source = $('#source').html();
 
-    recive.innerHTML += document.getElementById("source");
+    $("#recive").append(source);
 
+  }
+
+  function hapus(obj){
+    $(obj).parent().parent().parent().parent().remove();
   }
 
 </script>

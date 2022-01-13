@@ -20,16 +20,18 @@ while($barangs = $barang->fetch_array()){
 <div class="container my-5">
 	<div class="row">
 		<div class="col-md-12">
-			<h2 class="text-center">TOYO apps</h2>
+			<h1 class="text-center fw-bold">
+			<img src="logo.png" width="50px" class="" alt=""> TSM Apps</h1>
 		</div>
 	</div>
 
 	<?php if( count($dataBarang) != 0 ): ?>
 	<div class="card mt-4 shadow">
 		<div class="card-body">
+			<h5 class="mb-3">Barang yang akan habis</h5>
 			<?php foreach($dataBarang as $key => $data) : ?>
 			<div class="alert alert-danger my-2">
-				<p class="mb-0"><?= $data['nama_barang'] ?> tinggal <b><?= $data['last_stock'] ?></b> </p>
+				<p class="mb-0"><?= $data['nama_barang'] ?> <b><?= $data['last_stock'] == 0 ? "habis !" : "tinggal ". $data['last_stock'] ?></b> </p>
 			</div>
 			<?php endforeach; ?>
 		</div>
@@ -38,6 +40,10 @@ while($barangs = $barang->fetch_array()){
 
 
 	<div class="row mt-5">
+
+		<div class="col-md-12 col-12">
+			<h4>Manajemen Barang</h4>
+		</div>
 
 		<div class="col-md-4 col-6 mt-md-4 mt-4">
 			<a href="stock_barang.php">
@@ -82,6 +88,10 @@ while($barangs = $barang->fetch_array()){
 					<p class="text-center mt-4 fw-bold small">Pemakaian Kimia</p>
 				</div>
 			</a>
+		</div>
+
+		<div class="col-md-12 col-12 mt-5">
+			<h4>Lain-lain</h4>
 		</div>
 
 		<div class="col-md-4 col-6 mt-md-4 mt-4">
