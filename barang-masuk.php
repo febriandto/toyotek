@@ -1,6 +1,17 @@
 <?php include "header.php"; 
 
 $barangs = $conn->query("SELECT * FROM `m_barang` WHERE is_delete = 'N' and id_category = 1 ORDER BY `m_barang`.`id_barang` ASC ");
+$barang_masuk = $conn->query("SELECT * FROM t_barang_masuk");
+
+if(isset($_GET['detail'])){
+
+  $barang_masuk_item = $conn->query(" SELECT * FROM t_barang_masuk_item LEFT JOIN m_barang ON t_barang_masuk_item.id_barang = m_barang.id_barang WHERE id_barang_masuk = $_GET[detail] ");
+  $barang_masuk = $conn->query("SELECT * FROM t_barang_masuk WHERE id_barang_masuk = $_GET[detail] ");
+  $barang_masuk = $barang_masuk->fetch_array();
+
+}else{
+  $barang_masuk_item = $conn->query(" SELECT * FROM t_barang_masuk_item LEFT JOIN m_barang ON t_barang_masuk_item.id_barang = m_barang.id_barang WHERE id_barang_masuk = -1 ");
+}
 
 if( isset($_POST['submit']) ){
 
@@ -35,12 +46,12 @@ if( isset($_POST['submit']) ){
 
       <div class="row my-5">
         <div class="col-md-6 col-6">
-          <a href="index.php">
+          <a href="<?= isset($_GET['detail']) ? 'barang-masuk.php' : 'index.php' ?>">
             <h4 class="text-dark"> <img src="images/back.png" width="32px" alt=""> Kembali</h4>
           </a>
         </div>
 
-        <div class="col-md-6 col-6">
+        <div class="col-md-6 col-6 d-none">
           <a href="out_history.php">
             <h4 class="text-dark text-end">Riwayat <img src="images/back.png" width="32px" alt="" style="transform: rotate(180deg);"> </h4>
           </a>
@@ -54,97 +65,129 @@ if( isset($_POST['submit']) ){
       <?php endif; ?>
 
       <div class="row">
-        <div class="col-md-6 col-12">
-          <div class="card shadow mb-5">
-            <div class="card-header">
-              <div class="row">
-                <div class="col-md-12">
-                  <h3 class="text-center">Barang Masuk</h3>
+
+        <?php if(!isset($_GET['detail'])): ?>
+
+          <div class="col-md-6 col-12">
+            <div class="card shadow mb-5">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3 class="text-center">Barang Masuk</h3>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="card-body">
-              <form action="" method="POST">
-                <div class="row">
+              <div class="card-body">
+                <form action="" method="POST">
+                  <div class="row">
 
-                  <div class="col-md-12 mb-3">
-                    <label>Keterangan</label>
-                    <input type="text" name="keterangan" id="" class="form-control">
-                  </div>
-
-                <div class="col-md-12 col-12" id="recive">
-
-                  <div class="row border-bottom p-2">
-                    
-                    <div class="col-md-6 col-6">
-                      <label for=""> Nama Barang </label>
-                      <select name="id_barang[]" id="id_barang" class="form-control" required>
-                        <option value="">- Pilih -</option>
-                        <?php while ($row = $barang->fetch_array()) {
-                              echo '<option value="'.$row["id_barang"].'">'.$row["nama_barang"].'. ('.$row["last_stock"].') </option>';
-                          } ?>
-                      </select>
+                    <div class="col-md-12 mb-3">
+                      <label>Keterangan</label>
+                      <input type="text" name="keterangan" id="" class="form-control" required>
                     </div>
 
-                    <div class="col-md-6 col-6">
-                      <div class="row">
-                        <div class="col-md-12">
-                          <label for=""> Qty Barang </label>
-                        </div>
-                        <div class="col-md-12">
-                          <input type="number" name="qty[]" class="form-control" placeholder="0" required>
+                  <div class="col-md-12 col-12" id="recive">
+
+                    <div class="row border-bottom p-2">
+                      
+                      <div class="col-md-6 col-6">
+                        <label for=""> Nama Barang </label>
+                        <select name="id_barang[]" id="id_barang" class="form-control" required>
+                          <option value="">- Pilih -</option>
+                          <?php while ($row = $barang->fetch_array()) {
+                                echo '<option value="'.$row["id_barang"].'">'.$row["nama_barang"].'. ('.$row["last_stock"].') </option>';
+                            } ?>
+                        </select>
+                      </div>
+
+                      <div class="col-md-6 col-6">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <label for=""> Qty Barang </label>
+                          </div>
+                          <div class="col-md-12">
+                            <input type="number" name="qty[]" class="form-control" placeholder="0" required>
+                          </div>
                         </div>
                       </div>
+
                     </div>
 
                   </div>
 
+                  <div class="col-12 col-md-12 mt-3">
+                    <button type="button" class="btn btn-success btn-sm" onclick="tambah(this)"> + Tambah</button>
+                  </div>
+
+
+                  <div class="col-md-12 mt-5">
+                    <button type="submit" name="submit" class="btn btn-primary w-100" onclick="return confirm('Simpan ? ini akan mempengaruhi stock system');">Simpan</button>
+                  </div>  
                 </div>
-
-                <div class="col-12 col-md-12 mt-3">
-                  <button type="button" class="btn btn-success btn-sm" onclick="tambah(this)"> + Tambah</button>
-                </div>
-
-
-                <div class="col-md-12 mt-5">
-                  <button type="submit" name="submit" class="btn btn-primary w-100" onclick="return confirm('Simpan ? ini akan mempengaruhi stock system');">Simpan</button>
-                </div>  
+                </form>
               </div>
-              </form>
             </div>
           </div>
-        </div>
+
+          <div class="col-md-6 col-12">
+            <div class="card shadow mt-5 mt-md-0">
+              <div class="card-header">
+                <h3 class="text-center">Riwayat Barang Masuk</h3>
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Keterangan</th>
+                      <th>Tanggal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $no = 0; while ($row = $barang_masuk->fetch_array()) : ?>
+                    <tr>
+                      <td><?= $no+1 ?></td>
+                      <td> <a href="barang-masuk.php?detail=<?=$row['id_barang_masuk']?>"> <?= $row['keterangan'] ?> </a> </td>
+                      <td><?= date('d-M-Y H:i:s', strtotime($row['input_date'])) ?></td>
+                    </tr>
+                    <?php $no++; ?>
+                    <?php endwhile ;?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        <?php else: ?>
 
         <div class="col-md-6 col-12">
-          <div class="card shadow mt-5 mt-md-0">
-            <div class="card-header">
-              <h3 class="text-center">Barang yang berhasil masuk</h3>
+          <div class="card">
+            <div class="card-header text-center">
+             <h6><?= $barang_masuk['keterangan'] ?> - <span class="badge bg-secondary"> <?= date('d-m-Y', strtotime($barang_masuk['input_date'])) ?> </span></h6>
             </div>
             <div class="card-body">
-              <table class="table table-bordered">
-                <thead>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Barang</th>
+                  <th>Qty</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php $i = 1; while( $row = $barang_masuk_item->fetch_array() ): ?>
                   <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Qty</th>
-                    <th>Tanggal</th>
+                    <td><?= $i++; ?></td>
+                    <td><?= @$row['nama_barang'] ?></td>
+                    <td><?= @$row['qty'] ?></td>
                   </tr>
-                </thead>
-                <tbody>
-                  <?php $no = 0; while ($row = $pengeluaran_barang->fetch_array()) : ?>
-                  <tr>
-                    <td><?= $no+1 ?></td>
-                    <td><?= $row['nama_barang'] ?></td>
-                    <td><?= $row['qty'] ?></td>
-                    <td><?= date('d-M-Y H:i:s', strtotime($row['input_date'])) ?></td>
-                  </tr>
-                  <?php $no++; ?>
-                  <?php endwhile ;?>
-                </tbody>
-              </table>
+                <?php endwhile; ?>
+              </tbody>
+            </table>
             </div>
           </div>
         </div>
+
+        <?php endif; ?>
 
       </div>
 

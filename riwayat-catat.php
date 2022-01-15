@@ -7,7 +7,11 @@
   $filterPeriode = !empty(@$_GET['periode']) ? '' . $_GET['periode']. '' : "" ;
   $filterPeriode = urlencode($filterPeriode);
   
-  $file = file_get_contents("http://server/kasir/api/riwayat_catat.php?filterTagihan=$filterPemakaian&pencatat=$filterPencatat&periode=$filterPeriode&submit=");
+  $file = @file_get_contents("http://server/kasir/api/riwayat_catat.php?filterTagihan=$filterPemakaian&pencatat=$filterPencatat&periode=$filterPeriode&submit=");
+  if($file === FALSE) {
+    echo "<h1 class='text-center mt-5'>SERVER OFFLINE!</h1>";
+    exit();
+  }
   $json = json_decode($file, true);
 
 ?>
