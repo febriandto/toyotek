@@ -112,6 +112,15 @@ while($barangs = $barang->fetch_array()){
 			</a>
 		</div>
 
+		<div class="col-md-4 col-6 mt-md-4 mt-4">
+			<a href="diskon.php">
+				<div class="" style="padding:10px;width: 97%;height: 200px;border-radius: 10px;background: #ffffff;    box-shadow: 0px 0px 10px 5px #0000000f;margin: auto;">
+					<img src="images/diskon.png?v=1" width="85px" alt="" class="d-block mt-3 mx-auto">
+					<p class="text-center mt-4 fw-bold small">Kalkulator Diskon</p>
+				</div>
+			</a>
+		</div>
+
 		<div class="col-md-12 col-12 mt-5">
 			<h4>Lain-lain</h4>
 		</div>

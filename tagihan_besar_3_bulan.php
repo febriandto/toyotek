@@ -36,9 +36,6 @@ $json = json_decode($json, true);
 
 		<?php if(!isset($_GET['all_data'])) : ?>
 			<div class="col-md-6 col-6">
-					<a href="spk.php?all_data">
-						<h4 class="text-dark text-end">Riwayat <img src="images/back.png" width="32px" alt="" style="transform: rotate(180deg);"> </h4>
-					</a>
 			</div>
 		<?php endif; ?>
 
