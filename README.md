@@ -1,4 +1,4 @@
-# toyotek
+# TSM Apps
 Sebuah aplikasi sederhana untuk me-manage hal internal pada perusahaan Toyo Sinar Mulia
 
 ## What's inside
